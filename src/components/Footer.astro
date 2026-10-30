@@ -1,0 +1,21 @@
+---
+const currentYear = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrapper footer-inner">
+    <p>© {currentYear} Naveen Thurimerla</p>
+  </div>
+</footer>
+<style>
+.site-footer { border-top: 1px solid var(--gray-100); padding: 1.5rem 0; margin-top: auto; }
+.footer-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap;
+}
+.footer-inner p { font-size: var(--text-sm); color: var(--gray-400); }
+.footer-inner a {
+  color: var(--accent-regular); text-decoration: none; font-weight: 600;
+  transition: color var(--theme-transition);
+}
+.footer-inner a:hover { color: var(--accent-dark); }
+</style>
