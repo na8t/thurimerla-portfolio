@@ -59,68 +59,71 @@ const robotsDirective = is404
   ? 'noindex, follow'
   : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
-const graphElements = [
-  {
-    '@type': 'Person',
-    '@id': `${siteOrigin}/#person`,
-    name: 'Naveen Thurimerla',
-    givenName: 'Naveen',
-    familyName: 'Thurimerla',
-    alternateName: [
-      'Thurimerla Naveen',
-      'Thurimerla',
-      'Naveen Turimerla',
-      'Turimerla Naveen',
-      'Turimerla',
-      'Naveen T',
-      'na8t',
-      'naveenthurimerla'
-    ],
-    jobTitle: 'Staff Cloud Data & AI Platform Engineer',
-    description: description,
-    image: absoluteImage,
-    url: siteOrigin,
-    sameAs: [
-      'https://linkedin.com/in/naveenthurimerla',
-      'https://github.com/na8t'
-    ],
-    knowsAbout: [
-      'Cloud Data Architecture',
-      'Generative AI & LLMs',
-      'AWS Bedrock',
-      'Retrieval-Augmented Generation (RAG)',
-      'PySpark & Big Data Workflows',
-      'Microsoft Azure',
-      'Amazon Web Services (AWS)',
-      'Kubernetes & Containerization',
-      'Terraform & Infrastructure as Code',
-      'Apache Airflow',
-      'Vector Databases',
-      'AWS QuickSight Enterprise BI',
-      'CI/CD & DevOps Automation'
-    ]
-  },
-  {
-    '@type': 'WebSite',
-    '@id': `${siteOrigin}/#website`,
-    name: 'Naveen Thurimerla Portfolio',
-    url: siteOrigin,
-    alternateName: [
-      'thurimerla.com',
-      'www.thurimerla.com',
-      'Thurimerla Portfolio',
-      'Naveen Thurimerla',
-      'Thurimerla Naveen',
-      'Thurimerla',
-      'Naveen Turimerla',
-      'Turimerla Naveen',
-      'Turimerla'
-    ],
-    description: description,
-    publisher: {
-      '@id': `${siteOrigin}/#person`
-    }
+const personEntity = {
+  '@type': 'Person',
+  '@id': `${siteOrigin}/#person`,
+  name: 'Naveen Thurimerla',
+  givenName: 'Naveen',
+  familyName: 'Thurimerla',
+  alternateName: [
+    'Thurimerla Naveen',
+    'Thurimerla',
+    'Naveen Turimerla',
+    'Turimerla Naveen',
+    'Turimerla',
+    'Naveen T',
+    'na8t',
+    'naveenthurimerla'
+  ],
+  jobTitle: 'Staff Cloud Data & AI Platform Engineer',
+  description: description,
+  image: absoluteImage,
+  url: siteOrigin,
+  sameAs: [
+    'https://linkedin.com/in/naveenthurimerla',
+    'https://github.com/na8t'
+  ],
+  knowsAbout: [
+    'Cloud Data Architecture',
+    'Generative AI & LLMs',
+    'AWS Bedrock',
+    'Retrieval-Augmented Generation (RAG)',
+    'PySpark & Big Data Workflows',
+    'Microsoft Azure',
+    'Amazon Web Services (AWS)',
+    'Kubernetes & Containerization',
+    'Terraform & Infrastructure as Code',
+    'Apache Airflow',
+    'Vector Databases',
+    'AWS QuickSight Enterprise BI',
+    'CI/CD & DevOps Automation'
+  ]
+};
+
+const webSiteEntity = {
+  '@type': 'WebSite',
+  '@id': `${siteOrigin}/#website`,
+  name: 'Naveen Thurimerla Portfolio',
+  url: siteOrigin,
+  alternateName: [
+    'thurimerla.com',
+    'www.thurimerla.com',
+    'Thurimerla Portfolio',
+    'Naveen Thurimerla',
+    'Thurimerla Naveen',
+    'Thurimerla',
+    'Naveen Turimerla',
+    'Turimerla Naveen',
+    'Turimerla'
+  ],
+  description: description,
+  publisher: {
+    '@id': `${siteOrigin}/#person`
   }
+};
+
+const graphElements: any[] = [
+  webSiteEntity
 ];
 
 if (!is404) {
@@ -129,13 +132,13 @@ if (!is404) {
     '@id': `${resolvedCanonical}#webpage`,
     name: formattedTitle,
     url: resolvedCanonical,
-    about: {
-      '@id': `${siteOrigin}/#person`
-    },
+    mainEntity: personEntity,
     isPartOf: {
       '@id': `${siteOrigin}/#website`
     }
   });
+} else {
+  graphElements.push(personEntity);
 }
 
 const personSchema = {
@@ -144,15 +147,6 @@ const personSchema = {
 };
 ---
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-TE1QJWSZM9" is:inline></script>
-<script is:inline>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-TE1QJWSZM9');
-</script>
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
