@@ -9,10 +9,11 @@ const currentYear = new Date().getFullYear();
 <style>
 .site-footer { border-top: 1px solid var(--gray-100); padding: 1.5rem 0; margin-top: auto; }
 .footer-inner {
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
   gap: 1rem; flex-wrap: wrap;
 }
-.footer-inner p { font-size: var(--text-sm); color: var(--gray-400); }
+.footer-inner p { font-size: var(--text-sm); color: var(--gray-400); text-align: center; margin: 0 auto; }
 .footer-inner a {
   color: var(--accent-regular); text-decoration: none; font-weight: 600;
   transition: color var(--theme-transition);

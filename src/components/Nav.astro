@@ -97,11 +97,12 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 .header-inner {
   display: flex; align-items: center;
   justify-content: space-between;
-  height: 4rem; gap: 1.5rem;
+  height: 4rem; gap: 1rem;
 }
 .brand {
   display: flex; align-items: center;
-  gap: .625rem; text-decoration: none; flex-shrink: 0;
+  gap: .625rem; text-decoration: none; flex-shrink: 1;
+  min-width: 0;
 }
 .brand-mark {
   display: inline-flex; align-items: center; justify-content: center;
@@ -109,11 +110,13 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
   background: var(--gradient-accent);
   color: var(--accent-text-over);
   font-family: var(--font-brand); font-weight: 800; font-size: .75rem;
+  flex-shrink: 0;
 }
 .brand-name {
   font-family: var(--font-brand); font-weight: 700;
   font-size: var(--text-base); color: var(--gray-0);
   letter-spacing: -.02em;
+  white-space: nowrap;
 }
 .desktop-nav { display: none; align-items: center; gap: .125rem; }
 .nav-link {
@@ -124,7 +127,7 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
   transition: color var(--theme-transition), background-color var(--theme-transition);
 }
 .nav-link:hover { color: var(--gray-0); background-color: var(--gray-100); }
-.header-actions { display: flex; align-items: center; gap: .5rem; }
+.header-actions { display: flex; align-items: center; gap: .5rem; flex-shrink: 0; }
 .socials { display: none; align-items: center; gap: .125rem; }
 .social-icon {
   display: flex; align-items: center; gap: .4rem;
@@ -147,6 +150,9 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
   padding: 1rem 1.5rem 1.5rem;
   display: flex; flex-direction: column; gap: 1.25rem;
   background: var(--gray-999);
+}
+#mobile-menu[hidden] {
+  display: none !important;
 }
 #mobile-menu nav { display: flex; flex-direction: column; gap: .25rem; }
 .mobile-link {
