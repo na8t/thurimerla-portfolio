@@ -1,31 +1,195 @@
 ---
 import '../styles/global.css';
-interface Props { title?: string; description?: string; }
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  canonicalURL?: string;
+}
+
 const {
-  title = 'Naveen Thurimerla — Senior Cloud Data & AI Platform Engineer',
-  description = 'Senior Cloud Data & Platform Engineer with 10+ years architecting scalable AI/ML systems, data pipelines, and cloud infrastructure on AWS and Azure.',
+  title = 'Naveen Thurimerla — Staff Cloud Data & AI Platform Engineer',
+  description = 'Portfolio of Naveen Thurimerla (Thurimerla Naveen) — Staff Cloud Data, Platform & AI Engineer with 10+ years architecting scalable data pipelines, GenAI (RAG/Bedrock), and cloud platforms on AWS and Azure.',
+  image = '/profile.jpg',
+  canonicalURL,
 } = Astro.props;
+
+const siteKeywords = [
+  'Naveen Thurimerla',
+  'Thurimerla Naveen',
+  'Thurimerla',
+  'Naveen Turimerla',
+  'Turimerla Naveen',
+  'Turimerla',
+  'naveenthurimerla',
+  'na8t',
+  'Staff Cloud Data and AI Platform Engineer',
+  'Staff Cloud Data Engineer',
+  'Staff AI Platform Engineer',
+  'Cloud Data Architect',
+  'Senior Cloud Platform Engineer',
+  'AWS Cloud Architecture',
+  'Azure Data Platform',
+  'PySpark Big Data',
+  'Generative AI',
+  'AWS Bedrock',
+  'Retrieval Augmented Generation',
+  'RAG Architecture',
+  'Vector Databases',
+  'Terraform',
+  'Kubernetes',
+  'Docker',
+  'Apache Airflow',
+  'Data Pipelines',
+  'AWS QuickSight',
+  'AWS Textract',
+  'CI/CD Pipelines'
+].join(', ');
+
+const siteOrigin = 'https://www.thurimerla.com';
+const resolvedCanonical = canonicalURL ?? (Astro.site ? new URL(Astro.url.pathname, Astro.site).href : `${siteOrigin}${Astro.url.pathname}`);
+const absoluteImage = image.startsWith('http') ? image : `${siteOrigin}${image}`;
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      '@id': `${siteOrigin}/#person`,
+      name: 'Naveen Thurimerla',
+      givenName: 'Naveen',
+      familyName: 'Thurimerla',
+      alternateName: [
+        'Thurimerla Naveen',
+        'Thurimerla',
+        'Naveen Turimerla',
+        'Turimerla Naveen',
+        'Turimerla',
+        'Naveen T',
+        'na8t',
+        'naveenthurimerla'
+      ],
+      jobTitle: 'Staff Cloud Data & AI Platform Engineer',
+      description: description,
+      image: absoluteImage,
+      url: siteOrigin,
+      sameAs: [
+        'https://linkedin.com/in/naveenthurimerla',
+        'https://github.com/na8t'
+      ],
+      knowsAbout: [
+        'Cloud Data Architecture',
+        'Generative AI & LLMs',
+        'AWS Bedrock',
+        'Retrieval-Augmented Generation (RAG)',
+        'PySpark & Big Data Workflows',
+        'Microsoft Azure',
+        'Amazon Web Services (AWS)',
+        'Kubernetes & Containerization',
+        'Terraform & Infrastructure as Code',
+        'Apache Airflow',
+        'Vector Databases',
+        'AWS QuickSight Enterprise BI',
+        'CI/CD & DevOps Automation'
+      ]
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteOrigin}/#website`,
+      name: 'Naveen Thurimerla Portfolio',
+      url: siteOrigin,
+      alternateName: [
+        'thurimerla.com',
+        'www.thurimerla.com',
+        'Thurimerla Portfolio',
+        'Naveen Thurimerla',
+        'Thurimerla Naveen',
+        'Thurimerla',
+        'Naveen Turimerla',
+        'Turimerla Naveen',
+        'Turimerla'
+      ],
+      description: description,
+      publisher: {
+        '@id': `${siteOrigin}/#person`
+      }
+    },
+    {
+      '@type': 'ProfilePage',
+      '@id': `${resolvedCanonical}#webpage`,
+      name: title,
+      url: resolvedCanonical,
+      about: {
+        '@id': `${siteOrigin}/#person`
+      },
+      isPartOf: {
+        '@id': `${siteOrigin}/#website`
+      }
+    }
+  ]
+};
 ---
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-TE1QJWSZM9" is:inline></script>
+<script is:inline>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-TE1QJWSZM9');
+</script>
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
+
+<title>{title}</title>
+<meta name="title" content={title} />
 <meta name="description" content={description} />
+<meta name="keywords" content={siteKeywords} />
+<meta name="author" content="Naveen Thurimerla" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<link rel="canonical" href={resolvedCanonical} />
+
+<!-- Security & Referrer -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-Frame-Options" content="DENY" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
+
+<!-- OpenGraph / Facebook -->
+<meta property="og:type" content="profile" />
+<meta property="og:site_name" content="Naveen Thurimerla Portfolio" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:type" content="website" />
-<meta property="og:image" content="/profile.jpg" />
+<meta property="og:url" content={resolvedCanonical} />
+<meta property="og:image" content={absoluteImage} />
+<meta property="profile:first_name" content="Naveen" />
+<meta property="profile:last_name" content="Thurimerla" />
+<meta property="profile:username" content="na8t" />
+
+<!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content="/profile.jpg" />
-<title>{title}</title>
+<meta name="twitter:url" content={resolvedCanonical} />
+<meta name="twitter:image" content={absoluteImage} />
+
+<!-- Structured Data (JSON-LD) for Search Engines -->
+<script type="application/ld+json" is:inline set:html={JSON.stringify(personSchema)} />
+
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" href="/favicon.ico" sizes="any" />
+<link rel="apple-touch-icon" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+  rel="stylesheet"
+/>
+
 <script is:inline>
   const s = typeof localStorage !== 'undefined' && localStorage.getItem('theme');
   const d = s ? s === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;

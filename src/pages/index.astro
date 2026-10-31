@@ -171,9 +171,10 @@ const certifications = [
 					<div class="card-image-wrapper">
 						<img
 							src="/profile.jpg"
-							alt="Naveen Thurimerla — Senior Cloud Data & AI Platform Engineer"
+							alt="Naveen Thurimerla (Thurimerla Naveen) — Staff Cloud Data & AI Platform Engineer"
 							class="card-img"
 							loading="eager"
+							fetchpriority="high"
 						/>
 						<div class="status-pill">
 							<span class="badge-dot"></span>
@@ -340,7 +341,10 @@ const certifications = [
 										<span class="ptag">{t}</span>
 									))}
 								</div>
-								<h3 class="project-title">{title}</h3>
+								<h3 class="project-title">
+									<span>{title}</span>
+									<span class="project-arrow" aria-hidden="true">↗</span>
+								</h3>
 								<p class="project-desc">{description}</p>
 							</article>
 						))
@@ -451,7 +455,22 @@ const certifications = [
 
 	/* ─── Hero ──────────────────────────────────────── */
 	.hero {
+		position: relative;
 		padding-block: 2.5rem 3rem;
+		background: radial-gradient(
+			ellipse 80% 50% at 50% -20%,
+			rgba(99, 102, 241, 0.12),
+			transparent 75%
+		);
+		overflow: hidden;
+	}
+
+	:root.theme-dark .hero {
+		background: radial-gradient(
+			ellipse 80% 60% at 50% -20%,
+			rgba(129, 140, 248, 0.14),
+			transparent 80%
+		);
 	}
 
 	.hero-inner {
@@ -889,21 +908,28 @@ const certifications = [
 		display: inline-flex;
 		align-items: center;
 		gap: 0.4rem;
-		padding: 0.3rem 0.75rem;
+		padding: 0.35rem 0.8rem;
 		border-radius: 999rem;
 		border: 1px solid var(--border-subtle);
 		background: var(--bg-page);
 		cursor: default;
+		box-shadow: var(--shadow-xs);
 		transition:
 			border-color var(--ease),
 			background-color var(--ease),
+			box-shadow var(--ease),
 			transform var(--ease);
 	}
 
 	.skill-chip:hover {
 		border-color: var(--accent-border);
 		background: var(--accent-glow);
-		transform: translateY(-1px);
+		box-shadow: 0 4px 12px var(--accent-glow);
+		transform: translateY(-2px);
+	}
+
+	.skill-chip:hover .skill-name {
+		color: var(--text-primary);
 	}
 
 	.skill-chip i {
@@ -923,6 +949,7 @@ const certifications = [
 		font-family: var(--font-brand);
 		color: var(--text-secondary);
 		letter-spacing: 0.02em;
+		transition: color var(--ease);
 	}
 
 	/* ─── Projects ──────────────────────────────────── */
@@ -932,6 +959,8 @@ const certifications = [
 	}
 
 	.project-card {
+		position: relative;
+		overflow: hidden;
 		padding: 2rem;
 		border: 1px solid var(--border-subtle);
 		border-radius: 1rem;
@@ -945,12 +974,28 @@ const certifications = [
 			transform var(--ease);
 	}
 
+	.project-card::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 3px;
+		background: var(--grad-accent);
+		opacity: 0;
+		transition: opacity var(--ease);
+	}
+
 	.project-card:hover {
 		border-color: var(--accent-border);
 		box-shadow:
-			0 0 0 1px var(--accent-glow),
-			var(--shadow-md);
-		transform: translateY(-2px);
+			0 12px 28px -8px rgba(0, 0, 0, 0.12),
+			0 0 0 1px var(--accent-glow);
+		transform: translateY(-4px);
+	}
+
+	.project-card:hover::before {
+		opacity: 1;
 	}
 
 	.project-tags {
@@ -974,12 +1019,29 @@ const certifications = [
 	}
 
 	.project-title {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 0.5rem;
 		font-size: var(--text-md);
 		color: var(--text-primary);
 		font-family: var(--font-brand);
 		font-weight: 700;
 		margin-bottom: 0.875rem;
 		line-height: 1.35;
+	}
+
+	.project-arrow {
+		font-size: 1.15em;
+		color: var(--accent);
+		transition: transform var(--ease), opacity var(--ease);
+		flex-shrink: 0;
+		opacity: 0.6;
+	}
+
+	.project-card:hover .project-arrow {
+		transform: translate(3px, -3px);
+		opacity: 1;
 	}
 
 	.project-desc {
