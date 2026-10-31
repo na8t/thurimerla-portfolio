@@ -2,7 +2,144 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Not Found" description="404 Error — this page was not found">
-	<h1>Page Not Found</h1>
-	<p>The page you are looking for does not exist.</p>
+<BaseLayout
+	title="Page Not Found"
+	description="The page you are looking for does not exist. Return to Naveen Thurimerla's portfolio."
+>
+	<main class="not-found-main">
+		<div class="wrapper not-found-inner">
+			<h1 class="not-found-title">Page not found</h1>
+			<p class="not-found-desc">
+				Sorry, the page you're looking for doesn't exist, has been removed, or has moved to a new URL.
+			</p>
+			<div class="not-found-actions">
+				<a href="/" class="btn-primary">Return to Home</a>
+				<a href="/#contact" class="btn-ghost">Get in touch</a>
+			</div>
+		</div>
+	</main>
 </BaseLayout>
+
+<style>
+	.not-found-main {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-block: 5rem 6rem;
+		min-height: calc(100vh - 12rem);
+		text-align: center;
+		background: radial-gradient(
+			ellipse 80% 50% at 50% 20%,
+			rgba(99, 102, 241, 0.12),
+			transparent 70%
+		);
+	}
+
+	:root.theme-dark .not-found-main {
+		background: radial-gradient(
+			ellipse 80% 60% at 50% 20%,
+			rgba(129, 140, 248, 0.14),
+			transparent 75%
+		);
+	}
+
+	.not-found-inner {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		max-width: 36rem;
+		margin-inline: auto;
+	}
+
+	.not-found-badge {
+		display: inline-flex;
+		align-items: center;
+		font-family: var(--font-brand);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--accent);
+		background: var(--accent-glow);
+		border: 1px solid var(--accent-border);
+		padding: 0.25rem 0.75rem;
+		border-radius: 999rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.not-found-title {
+		font-size: clamp(2.25rem, 6vw, 3.5rem);
+		line-height: 1.1;
+		color: var(--text-primary);
+		letter-spacing: -0.03em;
+		margin-bottom: 1rem;
+	}
+
+	.not-found-desc {
+		font-size: var(--text-md);
+		color: var(--text-muted);
+		line-height: 1.7;
+		margin-bottom: 2rem;
+		max-width: 34ch;
+	}
+
+	.not-found-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.875rem;
+	}
+
+	.btn-primary {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0.8rem 1.75rem;
+		border-radius: 0.625rem;
+		background: var(--grad-accent);
+		color: #fff;
+		font-family: var(--font-brand);
+		font-weight: 700;
+		font-size: var(--text-sm);
+		text-decoration: none;
+		box-shadow: 0 2px 8px var(--accent-glow);
+		transition:
+			opacity var(--ease),
+			box-shadow var(--ease),
+			transform var(--ease);
+	}
+
+	.btn-primary:hover {
+		opacity: 0.92;
+		transform: translateY(-1px);
+		box-shadow: 0 4px 16px var(--accent-glow);
+	}
+
+	.btn-ghost {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.8rem 1.75rem;
+		border-radius: 0.625rem;
+		background: var(--bg-surface);
+		color: var(--text-secondary);
+		border: 1.5px solid var(--border-subtle);
+		font-family: var(--font-brand);
+		font-weight: 700;
+		font-size: var(--text-sm);
+		text-decoration: none;
+		transition:
+			border-color var(--ease),
+			color var(--ease),
+			background var(--ease);
+	}
+
+	.btn-ghost:hover {
+		border-color: var(--accent-border);
+		color: var(--text-primary);
+		background: var(--accent-glow);
+	}
+</style>

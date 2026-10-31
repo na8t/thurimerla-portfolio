@@ -51,83 +51,96 @@ const siteOrigin = 'https://www.thurimerla.com';
 const resolvedCanonical = canonicalURL ?? (Astro.site ? new URL(Astro.url.pathname, Astro.site).href : `${siteOrigin}${Astro.url.pathname}`);
 const absoluteImage = image.startsWith('http') ? image : `${siteOrigin}${image}`;
 
+const is404 = Astro.url.pathname.includes('404') || title.toLowerCase().includes('not found') || title.toLowerCase().includes('404');
+const formattedTitle = is404 && !title.includes('Naveen Thurimerla')
+  ? `${title} — Naveen Thurimerla`
+  : title;
+const robotsDirective = is404
+  ? 'noindex, follow'
+  : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+
+const graphElements = [
+  {
+    '@type': 'Person',
+    '@id': `${siteOrigin}/#person`,
+    name: 'Naveen Thurimerla',
+    givenName: 'Naveen',
+    familyName: 'Thurimerla',
+    alternateName: [
+      'Thurimerla Naveen',
+      'Thurimerla',
+      'Naveen Turimerla',
+      'Turimerla Naveen',
+      'Turimerla',
+      'Naveen T',
+      'na8t',
+      'naveenthurimerla'
+    ],
+    jobTitle: 'Staff Cloud Data & AI Platform Engineer',
+    description: description,
+    image: absoluteImage,
+    url: siteOrigin,
+    sameAs: [
+      'https://linkedin.com/in/naveenthurimerla',
+      'https://github.com/na8t'
+    ],
+    knowsAbout: [
+      'Cloud Data Architecture',
+      'Generative AI & LLMs',
+      'AWS Bedrock',
+      'Retrieval-Augmented Generation (RAG)',
+      'PySpark & Big Data Workflows',
+      'Microsoft Azure',
+      'Amazon Web Services (AWS)',
+      'Kubernetes & Containerization',
+      'Terraform & Infrastructure as Code',
+      'Apache Airflow',
+      'Vector Databases',
+      'AWS QuickSight Enterprise BI',
+      'CI/CD & DevOps Automation'
+    ]
+  },
+  {
+    '@type': 'WebSite',
+    '@id': `${siteOrigin}/#website`,
+    name: 'Naveen Thurimerla Portfolio',
+    url: siteOrigin,
+    alternateName: [
+      'thurimerla.com',
+      'www.thurimerla.com',
+      'Thurimerla Portfolio',
+      'Naveen Thurimerla',
+      'Thurimerla Naveen',
+      'Thurimerla',
+      'Naveen Turimerla',
+      'Turimerla Naveen',
+      'Turimerla'
+    ],
+    description: description,
+    publisher: {
+      '@id': `${siteOrigin}/#person`
+    }
+  }
+];
+
+if (!is404) {
+  graphElements.push({
+    '@type': 'ProfilePage',
+    '@id': `${resolvedCanonical}#webpage`,
+    name: formattedTitle,
+    url: resolvedCanonical,
+    about: {
+      '@id': `${siteOrigin}/#person`
+    },
+    isPartOf: {
+      '@id': `${siteOrigin}/#website`
+    }
+  });
+}
+
 const personSchema = {
   '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'Person',
-      '@id': `${siteOrigin}/#person`,
-      name: 'Naveen Thurimerla',
-      givenName: 'Naveen',
-      familyName: 'Thurimerla',
-      alternateName: [
-        'Thurimerla Naveen',
-        'Thurimerla',
-        'Naveen Turimerla',
-        'Turimerla Naveen',
-        'Turimerla',
-        'Naveen T',
-        'na8t',
-        'naveenthurimerla'
-      ],
-      jobTitle: 'Staff Cloud Data & AI Platform Engineer',
-      description: description,
-      image: absoluteImage,
-      url: siteOrigin,
-      sameAs: [
-        'https://linkedin.com/in/naveenthurimerla',
-        'https://github.com/na8t'
-      ],
-      knowsAbout: [
-        'Cloud Data Architecture',
-        'Generative AI & LLMs',
-        'AWS Bedrock',
-        'Retrieval-Augmented Generation (RAG)',
-        'PySpark & Big Data Workflows',
-        'Microsoft Azure',
-        'Amazon Web Services (AWS)',
-        'Kubernetes & Containerization',
-        'Terraform & Infrastructure as Code',
-        'Apache Airflow',
-        'Vector Databases',
-        'AWS QuickSight Enterprise BI',
-        'CI/CD & DevOps Automation'
-      ]
-    },
-    {
-      '@type': 'WebSite',
-      '@id': `${siteOrigin}/#website`,
-      name: 'Naveen Thurimerla Portfolio',
-      url: siteOrigin,
-      alternateName: [
-        'thurimerla.com',
-        'www.thurimerla.com',
-        'Thurimerla Portfolio',
-        'Naveen Thurimerla',
-        'Thurimerla Naveen',
-        'Thurimerla',
-        'Naveen Turimerla',
-        'Turimerla Naveen',
-        'Turimerla'
-      ],
-      description: description,
-      publisher: {
-        '@id': `${siteOrigin}/#person`
-      }
-    },
-    {
-      '@type': 'ProfilePage',
-      '@id': `${resolvedCanonical}#webpage`,
-      name: title,
-      url: resolvedCanonical,
-      about: {
-        '@id': `${siteOrigin}/#person`
-      },
-      isPartOf: {
-        '@id': `${siteOrigin}/#website`
-      }
-    }
-  ]
+  '@graph': graphElements
 };
 ---
 
@@ -145,14 +158,14 @@ const personSchema = {
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 
-<title>{title}</title>
-<meta name="title" content={title} />
+<title>{formattedTitle}</title>
+<meta name="title" content={formattedTitle} />
 <meta name="description" content={description} />
 <meta name="keywords" content={siteKeywords} />
 <meta name="author" content="Naveen Thurimerla" />
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<meta name="robots" content={robotsDirective} />
 
-<link rel="canonical" href={resolvedCanonical} />
+{!is404 && <link rel="canonical" href={resolvedCanonical} />}
 
 <!-- Security & Referrer -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -162,7 +175,7 @@ const personSchema = {
 <!-- OpenGraph / Facebook -->
 <meta property="og:type" content="profile" />
 <meta property="og:site_name" content="Naveen Thurimerla Portfolio" />
-<meta property="og:title" content={title} />
+<meta property="og:title" content={formattedTitle} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={resolvedCanonical} />
 <meta property="og:image" content={absoluteImage} />
@@ -172,7 +185,7 @@ const personSchema = {
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={title} />
+<meta name="twitter:title" content={formattedTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:url" content={resolvedCanonical} />
 <meta name="twitter:image" content={absoluteImage} />
